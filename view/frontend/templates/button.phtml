@@ -1,0 +1,38 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * BSS Commerce does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BSS Commerce does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   BSS
+ * @package    Bss_Limitcartqty
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+$_helper = $this->helper('Bss\Limitcartqty\Helper\CheckoutFlag'); ?>
+<?php if ($block->isPossibleOnepageCheckout()):?>
+    <button type="button"
+            data-role="proceed-to-checkout"
+            title="<?php /* @escapeNotVerified */ echo __('Proceed to Checkout') ?>"
+            data-mage-init='{"Magento_Checkout/js/proceed-to-checkout":{"checkoutUrl":"<?php /* @escapeNotVerified */ echo $block->getCheckoutUrl(); ?>"}}'
+            class="action primary checkout<?php echo($block->isDisabled()) ? ' disabled' : ''; ?>"
+            <?php if ($block->isDisabled() || !$_helper->isEnableToCheckout()):?>disabled="disabled"<?php endif; ?>>
+        <span><?php /* @escapeNotVerified */ echo __('Proceed to Checkout') ?></span>
+    </button>
+<?php endif?>
