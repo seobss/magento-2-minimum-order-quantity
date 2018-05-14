@@ -29,6 +29,10 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance dc" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">   
     <body>
-        <referenceBlock class="Magento\Checkout\Block\Onepage\Link" name="checkout.cart.methods.onepage.bottom" template="Bss_Limitcartqty::button.phtml"/>
+        <referenceBlock name="checkout.cart.methods.bottom">
+		    <action method="setTemplate">
+		        <argument name="template" xsi:type="string">Bss_Limitcartqty::cart/methods.phtml</argument>
+		    </action>
+		</referenceBlock>
     </body>
 </page>

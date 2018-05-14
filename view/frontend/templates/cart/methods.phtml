@@ -25,14 +25,22 @@
  * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
  * @license    http://bsscommerce.com/Bss-Commerce-License.txt
  */
-$_helper = $this->helper('Bss\Limitcartqty\Helper\CheckoutFlag'); ?>
-<?php if ($block->isPossibleOnepageCheckout()):?>
-    <button type="button"
-            data-role="proceed-to-checkout"
-            title="<?php /* @escapeNotVerified */ echo __('Proceed to Checkout') ?>"
-            data-mage-init='{"Magento_Checkout/js/proceed-to-checkout":{"checkoutUrl":"<?php /* @escapeNotVerified */ echo $block->getCheckoutUrl(); ?>"}}'
-            class="action primary checkout<?php echo($block->isDisabled()) ? ' disabled' : ''; ?>"
-            <?php if ($block->isDisabled() || !$_helper->isEnableToCheckout()):?>disabled="disabled"<?php endif; ?>>
-        <span><?php /* @escapeNotVerified */ echo __('Proceed to Checkout') ?></span>
-    </button>
-<?php endif?>
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var $block \Magento\Checkout\Block\Cart */
+?>
+<?php $_helper = $this->helper('Bss\Limitcartqty\Helper\CheckoutFlag'); ?>
+<?php if (!$block->hasError()): ?>
+<?php $methods = $block->getMethods('methods') ?: $block->getMethods('top_methods') ?>
+<ul class="checkout methods items checkout-methods-items">
+<?php foreach ($methods as $method): ?>
+    <?php if ($methodHtml = $block->getMethodHtml($method)): ?>
+    	<?php if ($_helper->isEnableToCheckout()): ?>
+   	 		<li class="item"><?= /* @escapeNotVerified */ $methodHtml ?></li>
+   	 	<?php endif; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+

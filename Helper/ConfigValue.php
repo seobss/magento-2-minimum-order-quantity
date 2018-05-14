@@ -38,14 +38,23 @@ class ConfigValue
 
     protected $groupManagement;
 
+    private $storeManager;
+
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Math\Random $mathRandom,
-        GroupManagementInterface $groupManagement
+        GroupManagementInterface $groupManagement,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->mathRandom = $mathRandom;
         $this->groupManagement = $groupManagement;
+        $this->storeManager = $storeManager;
+    }
+
+    public function getStoreId()
+    {
+        return $this->storeId = $this->storeManager->getStore()->getId();
     }
 
     protected function fixQty($qty)
@@ -135,7 +144,7 @@ class ConfigValue
         $value = $this->scopeConfig->getValue(
             'Bss_Commerce/item_options/Bss_min_total_qty',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $store
+            $this->getStoreId()
         );
         $value = $this->unserializeValue($value);
         if ($this->isEncodedArrayFieldValue($value)) {
@@ -153,12 +162,12 @@ class ConfigValue
         return $this->fixQty($result);
     }
 
-    public function getMaxConfigValue($_customerGroupId, $store = null)
+    public function getMaxConfigValue($_customerGroupId)
     {
         $value = $this->scopeConfig->getValue(
             'Bss_Commerce/item_options/Bss_max_total_qty',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $store
+            $this->getStoreId()
         );
         $value = $this->unserializeValue($value);
         if ($this->isEncodedArrayFieldValue($value)) {
@@ -181,7 +190,7 @@ class ConfigValue
         return $this->scopeConfig->getValue(
             'Bss_Commerce/Limitcartqty/Enable',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $store
+            $this->getStoreId()
         );
     }
 
