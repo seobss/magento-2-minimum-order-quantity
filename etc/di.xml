@@ -39,4 +39,7 @@
     <type name="Magento\Paypal\Model\Config">
         <plugin name="lcq-paypal-plugin" type="Bss\Limitcartqty\Plugin\PaypalPlugin" sortOrder="2"/>
     </type>
+    <type name="Magento\Braintree\Gateway\Config\PayPal\Config">
+        <plugin name="lcq-braintree-plugin" type="Bss\Limitcartqty\Plugin\BraintreePlugin" sortOrder="2"/>
+    </type>
 </config>
