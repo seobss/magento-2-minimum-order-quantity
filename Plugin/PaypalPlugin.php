@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * BSS Commerce Co.
  *
@@ -26,17 +25,20 @@
  * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
  * @license    http://bsscommerce.com/Bss-Commerce-License.txt
  */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Bss\Limitcartqty\Api\CheckCartInterface" type="Bss\Limitcartqty\Model\CheckCart"/>
-    <preference for="Bss\Limitcartqty\Api\DataConfigInterface" type="Bss\Limitcartqty\Model\DataConfig"/>
-    <type name="Magento\Checkout\Controller\Index\Index">
-        <plugin name="mintotal-redirect" type="Bss\Limitcartqty\Plugin\MintotalRedirect" sortOrder="1"/>
-    </type>
-    <type name="Magento\Multishipping\Helper\Data">
-        <plugin name="mintotal-redirect_multiship" type="Bss\Limitcartqty\Plugin\MintotalRedirect" sortOrder="2"/>
-    </type>
-    <type name="Magento\Paypal\Model\Config">
-        <plugin name="lcq-paypal-plugin" type="Bss\Limitcartqty\Plugin\PaypalPlugin" sortOrder="2"/>
-    </type>
-</config>
+namespace Bss\Limitcartqty\Plugin;
+
+class PaypalPlugin
+{
+    protected $checkoutFlag;
+
+    public function __construct(
+        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
+    ) {
+        $this->checkoutFlag = $checkoutFlag;
+    }
+
+    public function afterIsMethodAvailable(\Magento\Paypal\Model\Config $subject, $result)
+    {
+        return $result && $this->checkoutFlag->isEnableToCheckout();
+    }
+}
