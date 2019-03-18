@@ -39,12 +39,16 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
 
     protected $customMessage;
 
+    protected $cart;
+
     public function __construct(
+        \Magento\Checkout\Model\Cart $cart,
         DataConfigInterface $dataConfig,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Bss\Limitcartqty\Helper\CustomMessage $customMessage
     ) {
+        $this->cart = $cart;
         $this->dataConfig = $dataConfig;
         $this->customerSession = $customerSession;
         $this->messageManager = $messageManager;
@@ -126,8 +130,7 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     public function getCartQty()
     {
         if (!$this->customerSession->getCartQty()) {
-            $cart = \Magento\Framework\App\ObjectManager::getInstance()->get('\Magento\Checkout\Model\Cart');
-            $this->customerSession->setCartQty($cart->getQuote()->getItemsQty());
+            $this->customerSession->setCartQty($this->cart->getQuote()->getItemsQty());
         }
         return $this->customerSession->getCartQty();
     }

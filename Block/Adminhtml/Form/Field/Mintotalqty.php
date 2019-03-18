@@ -31,6 +31,10 @@ class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
 {
     protected $groupRenderer;
 
+    /**
+     * @return \Magento\Framework\View\Element\BlockInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     protected function _getGroupRenderer()
     {
         if (!$this->groupRenderer) {
@@ -43,6 +47,10 @@ class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
         }
         return $this->groupRenderer;
     }
+
+    /**
+     * _prepareToRender
+     */
     protected function _prepareToRender()
     {
         $this->addColumn(
@@ -53,6 +61,12 @@ class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
         $this->_addAfter = false;
         $this->_addButtonLabel = __('Add Minimum Qty');
     }
+
+    /**
+     * _prepareArrayRow
+     *
+     * @param \Magento\Framework\DataObject $row
+     */
     protected function _prepareArrayRow(\Magento\Framework\DataObject $row)
     {
         $optionExtraAttr = [];

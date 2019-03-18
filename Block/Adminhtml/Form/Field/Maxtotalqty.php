@@ -43,6 +43,10 @@ class Maxtotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
         }
         return $this->groupRenderer;
     }
+
+    /**
+     * Prepare To Render
+     */
     protected function _prepareToRender()
     {
         $this->addColumn(
@@ -53,6 +57,12 @@ class Maxtotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
         $this->_addAfter = false;
         $this->_addButtonLabel = __('Add Maximum Qty');
     }
+
+    /**
+     * _prepareArrayRow
+     *
+     * @param \Magento\Framework\DataObject $row
+     */
     protected function _prepareArrayRow(\Magento\Framework\DataObject $row)
     {
         $optionExtraAttr = [];

@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * BSS Commerce Co.
  *
@@ -26,11 +25,32 @@
  * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
  * @license    http://bsscommerce.com/Bss-Commerce-License.txt
  */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Bss_Limitcartqty" setup_version="1.0.2">
-    <sequence>
-        <module name="Magento_Checkout"/>
-    </sequence>
-    </module>
-</config>
+namespace Bss\Limitcartqty\Plugin\CustomerData;
+
+use Bss\Limitcartqty\Api\DataConfigInterface;
+
+class Cart
+{
+
+    protected $checkoutFlag;
+
+    protected $dataConfig;
+
+    public function __construct(
+        DataConfigInterface $dataConfig,
+        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
+    ) {
+        $this->checkoutFlag = $checkoutFlag;
+        $this->dataConfig = $dataConfig;
+    }
+
+    public function afterGetSectionData(\Magento\Checkout\CustomerData\Cart $subject, $result)
+    {
+        if ($result['summary_count'] > $this->dataConfig->getMaxValue() ||
+            $result['summary_count'] < $this->dataConfig->getMinValue()
+        ) {
+            $result['possible_onepage_checkout'] = false;
+        }
+        return $result;
+    }
+}
