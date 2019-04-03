@@ -29,8 +29,15 @@ namespace Bss\Limitcartqty\Block\Adminhtml\Form\Field;
 
 class Maxtotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
 {
+    /**
+     * @var
+     */
     protected $groupRenderer;
 
+    /**
+     * @return \Magento\Framework\View\Element\BlockInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     protected function _getGroupRenderer()
     {
         if (!$this->groupRenderer) {

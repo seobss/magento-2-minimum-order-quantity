@@ -1,4 +1,5 @@
-<?php
+<?xml version="1.0"?>
+<!--
 /**
  * BSS Commerce Co.
  *
@@ -25,23 +26,9 @@
  * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
  * @license    http://bsscommerce.com/Bss-Commerce-License.txt
  */
-namespace Bss\Limitcartqty\Observer;
-
-use Magento\Framework\Event\ObserverInterface;
-
-class UpdateCustomerGroup implements ObserverInterface
-{
-    protected $checkoutFlag;
-    
-    public function __construct(
-        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
-    ) {
-        $this->checkoutFlag = $checkoutFlag;
-    }
-
-    public function execute(\Magento\Framework\Event\Observer $observer)
-    {
-//        var_dump('123'); die('1hi');
-//        $this->checkoutFlag->resetCart();
-    }
-}
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="payment_cart_collect_items_and_amounts">
+        <observer name="check_qty" instance="Bss\Limitcartqty\Observer\CheckPayPal"/>
+    </event>
+</config>

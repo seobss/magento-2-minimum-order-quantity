@@ -29,6 +29,9 @@ namespace Bss\Limitcartqty\Block\Adminhtml\Form\Field;
 
 class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
 {
+    /**
+     * @var
+     */
     protected $groupRenderer;
 
     /**
@@ -63,9 +66,10 @@ class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
     }
 
     /**
-     * _prepareArrayRow
+     *  _prepareArrayRow
      *
      * @param \Magento\Framework\DataObject $row
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _prepareArrayRow(\Magento\Framework\DataObject $row)
     {

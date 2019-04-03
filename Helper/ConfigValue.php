@@ -32,14 +32,30 @@ use Magento\Store\Model\Store;
 
 class ConfigValue
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
-
+    /**
+     * @var \Magento\Framework\Math\Random
+     */
     protected $mathRandom;
-
+    /**
+     * @var GroupManagementInterface
+     */
     protected $groupManagement;
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
 
-    private $storeManager;
-
+    /**
+     * ConfigValue constructor.
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Framework\Math\Random $mathRandom
+     * @param GroupManagementInterface $groupManagement
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Math\Random $mathRandom,
@@ -52,16 +68,28 @@ class ConfigValue
         $this->storeManager = $storeManager;
     }
 
+    /**
+     * @return int
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getStoreId()
     {
         return $this->storeId = $this->storeManager->getStore()->getId();
     }
 
+    /**
+     * @param $qty
+     * @return float|null
+     */
     protected function fixQty($qty)
     {
         return !empty($qty) ? (float) $qty : null;
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     protected function serializeValue($value)
     {
         if (is_numeric($value)) {
@@ -83,6 +111,10 @@ class ConfigValue
         }
     }
 
+    /**
+     * @param $value
+     * @return array|mixed
+     */
     protected function unserializeValue($value)
     {
         if (is_numeric($value)) {
@@ -94,6 +126,10 @@ class ConfigValue
         }
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     protected function isEncodedArrayFieldValue($value)
     {
         if (!is_array($value)) {
@@ -111,6 +147,11 @@ class ConfigValue
         return true;
     }
 
+    /**
+     * @param array $value
+     * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     protected function encodeArrayFieldValue(array $value)
     {
         $result = [];
@@ -121,6 +162,10 @@ class ConfigValue
         return $result;
     }
 
+    /**
+     * @param array $value
+     * @return array
+     */
     protected function decodeArrayFieldValue(array $value)
     {
         $result = [];
@@ -139,7 +184,12 @@ class ConfigValue
         return $result;
     }
 
-    public function getMinConfigValue($_customerGroupId, $store = null)
+    /**
+     * @param $_customerGroupId
+     * @return float|null
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getMinConfigValue($_customerGroupId)
     {
         $value = $this->scopeConfig->getValue(
             'Bss_Commerce/item_options/Bss_min_total_qty',
@@ -162,6 +212,11 @@ class ConfigValue
         return $this->fixQty($result);
     }
 
+    /**
+     * @param $_customerGroupId
+     * @return float|null
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getMaxConfigValue($_customerGroupId)
     {
         $value = $this->scopeConfig->getValue(
@@ -185,7 +240,11 @@ class ConfigValue
         return $this->fixQty($result);
     }
 
-    public function isModuleEnable($store)
+    /**
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function isModuleEnable()
     {
         return $this->scopeConfig->getValue(
             'Bss_Commerce/Limitcartqty/Enable',
@@ -194,6 +253,11 @@ class ConfigValue
         );
     }
 
+    /**
+     * @param $value
+     * @return array|mixed
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function makeArrayFieldValue($value)
     {
         $value = $this->unserializeValue($value);
@@ -203,6 +267,10 @@ class ConfigValue
         return $value;
     }
 
+    /**
+     * @param $value
+     * @return array|string
+     */
     public function makeStorableArrayFieldValue($value)
     {
         if ($this->isEncodedArrayFieldValue($value)) {
@@ -211,7 +279,11 @@ class ConfigValue
         $value = $this->serializeValue($value);
         return $value;
     }
-    
+
+    /**
+     * @return int|null
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     protected function getAllCustomersGroupId()
     {
         return $this->groupManagement->getAllCustomersGroup()->getId();

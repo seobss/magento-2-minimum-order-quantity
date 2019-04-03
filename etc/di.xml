@@ -36,12 +36,12 @@
     <type name="Magento\Multishipping\Helper\Data">
         <plugin name="mintotal-redirect_multiship" type="Bss\Limitcartqty\Plugin\MintotalRedirect" sortOrder="2"/>
     </type>
-    <type name="Magento\Paypal\Model\Config">
-        <plugin name="lcq-paypal-plugin" type="Bss\Limitcartqty\Plugin\PaypalPlugin" sortOrder="2"/>
-    </type>
-    <type name="Magento\Braintree\Gateway\Config\PayPal\Config">
-        <plugin name="lcq-braintree-plugin" type="Bss\Limitcartqty\Plugin\BraintreePlugin" sortOrder="2"/>
-    </type>
+    <!--<type name="Magento\Paypal\Model\Config">-->
+        <!--<plugin name="lcq-paypal-plugin" type="Bss\Limitcartqty\Plugin\PaypalPlugin" sortOrder="2"/>-->
+    <!--</type>-->
+    <!--<type name="Magento\Braintree\Gateway\Config\PayPal\Config">-->
+        <!--<plugin name="lcq-braintree-plugin" type="Bss\Limitcartqty\Plugin\BraintreePlugin" sortOrder="2"/>-->
+    <!--</type>-->
     <type name="Magento\Checkout\CustomerData\Cart">
         <plugin name="bss-section-cart-data" type="Bss\Limitcartqty\Plugin\CustomerData\Cart" sortOrder="1000"/>
     </type>

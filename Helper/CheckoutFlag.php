@@ -28,20 +28,46 @@
 namespace Bss\Limitcartqty\Helper;
 
 use Bss\Limitcartqty\Api\DataConfigInterface;
+use Magento\Framework\App\Helper\Context;
 
+/**
+ * Class CheckoutFlag
+ * @package Bss\Limitcartqty\Helper
+ */
 class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    /**
+     * @var DataConfigInterface
+     */
     protected $dataConfig;
-
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
     protected $customerSession;
-
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
     protected $messageManager;
-
+    /**
+     * @var CustomMessage
+     */
     protected $customMessage;
-
+    /**
+     * @var \Magento\Checkout\Model\Cart
+     */
     protected $cart;
 
+    /**
+     * CheckoutFlag constructor.
+     * @param Context $context
+     * @param \Magento\Checkout\Model\Cart $cart
+     * @param DataConfigInterface $dataConfig
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param CustomMessage $customMessage
+     */
     public function __construct(
+        Context $context,
         \Magento\Checkout\Model\Cart $cart,
         DataConfigInterface $dataConfig,
         \Magento\Customer\Model\Session $customerSession,
@@ -53,6 +79,7 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
         $this->customerSession = $customerSession;
         $this->messageManager = $messageManager;
         $this->customMessage = $customMessage;
+        parent::__construct($context);
     }
 
     /*
@@ -71,6 +98,9 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->checkMax() && $this->checkMin();
     }
 
+    /**
+     * @return bool
+     */
     public function validateMin()
     {
         if ($this->checkMin()) {
@@ -86,6 +116,9 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
+    /**
+     * @return bool
+     */
     public function validateMax()
     {
         if ($this->checkMax()) {
@@ -101,6 +134,9 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
+    /**
+     * @return bool
+     */
     public function checkMax()
     {
         $this->customerSession->setMaxConfigCartQty($this->dataConfig->getMaxValue());
@@ -109,6 +145,9 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
             || !$this->dataConfig->isModuleEnable();
     }
 
+    /**
+     * @return bool
+     */
     public function checkMin()
     {
         $this->customerSession->setMinConfigCartQty($this->dataConfig->getMinValue());
@@ -117,16 +156,25 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
             || !$this->dataConfig->isModuleEnable();
     }
 
+    /**
+     * @return mixed
+     */
     public function getMinConfigCartQty()
     {
         return $this->customerSession->getMinConfigCartQty();
     }
 
+    /**
+     * @return mixed
+     */
     public function getMaxConfigCartQty()
     {
         return $this->customerSession->getMaxConfigCartQty();
     }
 
+    /**
+     * @return mixed
+     */
     public function getCartQty()
     {
         if (!$this->customerSession->getCartQty()) {
@@ -135,6 +183,9 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->customerSession->getCartQty();
     }
 
+    /**
+     * resetCart
+     */
     public function resetCart()
     {
         $this->customerSession->setCartQty(null);

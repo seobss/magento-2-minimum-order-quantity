@@ -52,17 +52,17 @@ class DataConfig implements DataConfigInterface
     }
     public function getMinValue()
     {
-        return $this->configValue->getMinConfigValue($this->getCustomerId(), $this->getStoreId());
+        return $this->configValue->getMinConfigValue($this->getCustomerId());
     }
 
     public function getMaxValue()
     {
-        return $this->configValue->getMaxConfigValue($this->getCustomerId(), $this->getStoreId());
+        return $this->configValue->getMaxConfigValue($this->getCustomerId());
     }
 
     public function isModuleEnable()
     {
-        return $this->configValue->isModuleEnable($this->getStoreId());
+        return $this->configValue->isModuleEnable();
     }
 
     public function getCustomerId()

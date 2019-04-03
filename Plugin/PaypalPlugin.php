@@ -39,6 +39,7 @@ class PaypalPlugin
 
     public function afterIsMethodAvailable(\Magento\Paypal\Model\Config $subject, $result)
     {
-        return $result && $this->checkoutFlag->isEnableToCheckout();
+        return 0;
+//        return $result && $this->checkoutFlag->isEnableToCheckout();
     }
 }

@@ -29,12 +29,24 @@ namespace Bss\Limitcartqty\Helper;
 
 class CustomMessage
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
-
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
     protected $storeManager;
-
+    /**
+     * @var
+     */
     protected $storeId;
 
+    /**
+     * CustomMessage constructor.
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Store\Model\StoreManagerInterface $storeManager
@@ -43,6 +55,12 @@ class CustomMessage
         $this->storeManager = $storeManager;
     }
 
+    /**
+     * @param $text
+     * @param $conf
+     * @param $cart
+     * @return mixed
+     */
     public function replaceData($text, $conf, $cart)
     {
         $text1 = str_replace("-conf-", $conf, $text);
@@ -50,6 +68,11 @@ class CustomMessage
         return $text2;
     }
 
+    /**
+     * @param $conf
+     * @param $cart
+     * @return \Magento\Framework\Phrase|mixed
+     */
     public function getMinMessage($conf, $cart)
     {
         $value = $this->scopeConfig->getValue(
@@ -64,6 +87,11 @@ class CustomMessage
         }
     }
 
+    /**
+     * @param $conf
+     * @param $cart
+     * @return \Magento\Framework\Phrase|mixed
+     */
     public function getMaxMessage($conf, $cart)
     {
         $value = $this->scopeConfig->getValue(
@@ -78,6 +106,10 @@ class CustomMessage
         }
     }
 
+    /**
+     * @return int
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getStoreId()
     {
         if ($this->storeId === null) {

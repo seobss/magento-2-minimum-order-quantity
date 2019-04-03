@@ -32,24 +32,48 @@ use Bss\Limitcartqty\Api\DataConfigInterface;
 class Cart
 {
 
+    /**
+     * @var \Bss\Limitcartqty\Helper\CheckoutFlag
+     */
     protected $checkoutFlag;
-
+    /**
+     * @var DataConfigInterface
+     */
     protected $dataConfig;
+    /**
+     * @var \Bss\Limitcartqty\Helper\ConfigValue
+     */
+    protected $helper;
 
+    /**
+     * Cart constructor.
+     * @param DataConfigInterface $dataConfig
+     * @param \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
+     * @param \Bss\Limitcartqty\Helper\ConfigValue $helper
+     */
     public function __construct(
         DataConfigInterface $dataConfig,
-        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
+        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag,
+        \Bss\Limitcartqty\Helper\ConfigValue $helper
     ) {
+        $this->helper = $helper;
         $this->checkoutFlag = $checkoutFlag;
         $this->dataConfig = $dataConfig;
     }
 
+    /**
+     * @param \Magento\Checkout\CustomerData\Cart $subject
+     * @param $result
+     * @return mixed
+     */
     public function afterGetSectionData(\Magento\Checkout\CustomerData\Cart $subject, $result)
     {
-        if ($result['summary_count'] > $this->dataConfig->getMaxValue() ||
-            $result['summary_count'] < $this->dataConfig->getMinValue()
-        ) {
-            $result['possible_onepage_checkout'] = false;
+        if ($this->helper->isModuleEnable() == 1) {
+            if ($result['summary_count'] > $this->dataConfig->getMaxValue() ||
+                $result['summary_count'] < $this->dataConfig->getMinValue()
+            ) {
+                $result['possible_onepage_checkout'] = false;
+            }
         }
         return $result;
     }

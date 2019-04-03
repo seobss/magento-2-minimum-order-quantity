@@ -27,12 +27,27 @@
  */
 namespace Bss\Limitcartqty\Plugin;
 
+/**
+ * Class MintotalRedirect
+ * @package Bss\Limitcartqty\Plugin
+ */
 class MintotalRedirect
 {
+    /**
+     * @var \Bss\Limitcartqty\Helper\CheckoutFlag
+     */
     protected $checkoutFlag;
 
+    /**
+     * @var \Magento\Framework\App\Response\Http
+     */
     protected $response;
 
+    /**
+     * MintotalRedirect constructor.
+     * @param \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
+     * @param \Magento\Framework\App\Response\Http $response
+     */
     public function __construct(
         \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag,
         \Magento\Framework\App\Response\Http $response
@@ -41,6 +56,11 @@ class MintotalRedirect
         $this->response = $response;
     }
 
+    /**
+     * @param \Magento\Checkout\Controller\Index\Index $subject
+     * @param $result
+     * @return \Magento\Framework\App\Response\Http|\Magento\Framework\App\Response\HttpInterface
+     */
     public function afterExecute(\Magento\Checkout\Controller\Index\Index $subject, $result)
     {
         if ($this->checkoutFlag->isEnableToCheckout()) {
@@ -49,7 +69,12 @@ class MintotalRedirect
             return $this->response->setRedirect('cart');
         }
     }
-    
+
+    /**
+     * @param \Magento\Multishipping\Helper\Data $subject
+     * @param $result
+     * @return bool
+     */
     public function afterIsMultishippingCheckoutAvailable(\Magento\Multishipping\Helper\Data $subject, $result)
     {
         return $this->checkoutFlag->validateCheckout() && $result;

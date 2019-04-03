@@ -39,6 +39,7 @@ class BraintreePlugin
 
     public function afterIsDisplayShoppingCart(\Magento\Braintree\Gateway\Config\PayPal\Config $subject, $result)
     {
-        return $result && $this->checkoutFlag->isEnableToCheckout();
+        return 0;
+//        return $result && $this->checkoutFlag->isEnableToCheckout();
     }
 }
