@@ -27,18 +27,48 @@
  */
 namespace Bss\Limitcartqty\Model\System\Config\Backend;
 
-class ConfigModel extends \Magento\Framework\App\Config\Value
+use Bss\Limitcartqty\Helper\ConfigValue;
+use Magento\Framework\App\Cache\TypeListInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\Config\Value;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+
+/**
+ * Class ConfigModel
+ *
+ * @package Bss\Limitcartqty\Model\System\Config\Backend
+ */
+class ConfigModel extends Value
 {
+    /**
+     * @var ConfigValue|null
+     */
     protected $configValue = null;
 
+    /**
+     * ConfigModel constructor.
+     *
+     * @param Context $context
+     * @param Registry $registry
+     * @param ScopeConfigInterface $config
+     * @param TypeListInterface $cacheTypeList
+     * @param ConfigValue $configValue
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
+     * @param array $data
+     */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\App\Config\ScopeConfigInterface $config,
-        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
-        \Bss\Limitcartqty\Helper\ConfigValue $configValue,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        Context $context,
+        Registry $registry,
+        ScopeConfigInterface $config,
+        TypeListInterface $cacheTypeList,
+        ConfigValue $configValue,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->configValue = $configValue;
@@ -52,7 +82,13 @@ class ConfigModel extends \Magento\Framework\App\Config\Value
             $data
         );
     }
-    
+
+    /**
+     * _afterLoad
+     *
+     * @return Value|void
+     * @throws LocalizedException
+     */
     protected function _afterLoad()
     {
         $value = $this->getValue();
@@ -60,6 +96,12 @@ class ConfigModel extends \Magento\Framework\App\Config\Value
         $this->setValue($value);
     }
 
+    /**
+     * BeforeSave
+     *
+     * @return Value|void
+     * @throws LocalizedException
+     */
     public function beforeSave()
     {
         $value = $this->getValue();

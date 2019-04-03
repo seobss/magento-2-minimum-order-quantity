@@ -28,12 +28,20 @@
 namespace Bss\Limitcartqty\Plugin\CustomerData;
 
 use Bss\Limitcartqty\Api\DataConfigInterface;
+use Bss\Limitcartqty\Helper\CheckoutFlag;
+use Bss\Limitcartqty\Helper\ConfigValue;
+use Magento\Framework\Exception\NoSuchEntityException;
 
+/**
+ * Class Cart
+ *
+ * @package Bss\Limitcartqty\Plugin\CustomerData
+ */
 class Cart
 {
 
     /**
-     * @var \Bss\Limitcartqty\Helper\CheckoutFlag
+     * @var CheckoutFlag
      */
     protected $checkoutFlag;
     /**
@@ -41,20 +49,20 @@ class Cart
      */
     protected $dataConfig;
     /**
-     * @var \Bss\Limitcartqty\Helper\ConfigValue
+     * @var ConfigValue
      */
     protected $helper;
 
     /**
      * Cart constructor.
      * @param DataConfigInterface $dataConfig
-     * @param \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
-     * @param \Bss\Limitcartqty\Helper\ConfigValue $helper
+     * @param CheckoutFlag $checkoutFlag
+     * @param ConfigValue $helper
      */
     public function __construct(
         DataConfigInterface $dataConfig,
-        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag,
-        \Bss\Limitcartqty\Helper\ConfigValue $helper
+        CheckoutFlag $checkoutFlag,
+        ConfigValue $helper
     ) {
         $this->helper = $helper;
         $this->checkoutFlag = $checkoutFlag;
@@ -62,9 +70,13 @@ class Cart
     }
 
     /**
+     * Get Section
+     *
      * @param \Magento\Checkout\CustomerData\Cart $subject
-     * @param $result
+     * @param array $result
      * @return mixed
+     * @throws NoSuchEntityException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetSectionData(\Magento\Checkout\CustomerData\Cart $subject, $result)
     {

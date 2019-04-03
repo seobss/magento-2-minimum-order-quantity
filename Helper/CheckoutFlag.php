@@ -28,24 +28,30 @@
 namespace Bss\Limitcartqty\Helper;
 
 use Bss\Limitcartqty\Api\DataConfigInterface;
+use Magento\Checkout\Model\Cart;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface;
 
 /**
  * Class CheckoutFlag
+ *
  * @package Bss\Limitcartqty\Helper
  */
-class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
+class CheckoutFlag extends AbstractHelper
 {
     /**
      * @var DataConfigInterface
      */
     protected $dataConfig;
     /**
-     * @var \Magento\Customer\Model\Session
+     * @var Session
      */
     protected $customerSession;
     /**
-     * @var \Magento\Framework\Message\ManagerInterface
+     * @var ManagerInterface
      */
     protected $messageManager;
     /**
@@ -53,26 +59,27 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $customMessage;
     /**
-     * @var \Magento\Checkout\Model\Cart
+     * @var Cart
      */
     protected $cart;
 
     /**
      * CheckoutFlag constructor.
+     *
      * @param Context $context
-     * @param \Magento\Checkout\Model\Cart $cart
+     * @param Cart $cart
      * @param DataConfigInterface $dataConfig
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param Session $customerSession
+     * @param ManagerInterface $messageManager
      * @param CustomMessage $customMessage
      */
     public function __construct(
         Context $context,
-        \Magento\Checkout\Model\Cart $cart,
+        Cart $cart,
         DataConfigInterface $dataConfig,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Framework\Message\ManagerInterface $messageManager,
-        \Bss\Limitcartqty\Helper\CustomMessage $customMessage
+        Session $customerSession,
+        ManagerInterface $messageManager,
+        CustomMessage $customMessage
     ) {
         $this->cart = $cart;
         $this->dataConfig = $dataConfig;
@@ -82,24 +89,32 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
         parent::__construct($context);
     }
 
-    /*
-        Check with pop out message
-    */
+    /**
+     * Validate Checkout
+     *
+     * @return bool
+     * @throws NoSuchEntityException
+     */
     public function validateCheckout()
     {
         return $this->validateMax() && $this->validateMin();
     }
 
-    /*
-        Check without pop out message
-    */
+    /**
+     * Check Enable
+     *
+     * @return bool
+     */
     public function isEnableToCheckout()
     {
         return $this->checkMax() && $this->checkMin();
     }
 
     /**
+     * Validate Min
+     *
      * @return bool
+     * @throws NoSuchEntityException
      */
     public function validateMin()
     {
@@ -117,7 +132,10 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Validate Max
+     *
      * @return bool
+     * @throws NoSuchEntityException
      */
     public function validateMax()
     {
@@ -135,6 +153,8 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Check Max
+     *
      * @return bool
      */
     public function checkMax()
@@ -146,6 +166,8 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Check Min
+     *
      * @return bool
      */
     public function checkMin()
@@ -157,6 +179,8 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Get Min
+     *
      * @return mixed
      */
     public function getMinConfigCartQty()
@@ -165,6 +189,8 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Get Max
+     *
      * @return mixed
      */
     public function getMaxConfigCartQty()
@@ -173,6 +199,8 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * GetQty
+     *
      * @return mixed
      */
     public function getCartQty()
@@ -184,7 +212,7 @@ class CheckoutFlag extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * resetCart
+     * Reset Cart
      */
     public function resetCart()
     {

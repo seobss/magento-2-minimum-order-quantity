@@ -30,10 +30,24 @@ namespace Bss\Limitcartqty\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
+/**
+ * Class CheckPayPal
+ *
+ * @package Bss\Limitcartqty\Observer
+ */
 class CheckPayPal implements ObserverInterface
 {
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     protected $logger;
+    /**
+     * @var \Magento\Checkout\Helper\Cart
+     */
     protected $cart;
+    /**
+     * @var \Bss\Limitcartqty\Helper\ConfigValue
+     */
     protected $helper;
     protected $dataConfig;
     protected $checkoutFlag;

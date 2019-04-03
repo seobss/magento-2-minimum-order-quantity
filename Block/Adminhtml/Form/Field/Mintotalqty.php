@@ -27,7 +27,17 @@
  */
 namespace Bss\Limitcartqty\Block\Adminhtml\Form\Field;
 
-class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
+use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
+use Magento\Framework\DataObject;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\View\Element\BlockInterface;
+
+/**
+ * Class Mintotalqty
+ *
+ * @package Bss\Limitcartqty\Block\Adminhtml\Form\Field
+ */
+class Mintotalqty extends AbstractFieldArray
 {
     /**
      * @var
@@ -35,14 +45,16 @@ class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
     protected $groupRenderer;
 
     /**
-     * @return \Magento\Framework\View\Element\BlockInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * _getGroupRenderer
+     *
+     * @return BlockInterface
+     * @throws LocalizedException
      */
     protected function _getGroupRenderer()
     {
         if (!$this->groupRenderer) {
             $this->groupRenderer = $this->getLayout()->createBlock(
-                'Magento\CatalogInventory\Block\Adminhtml\Form\Field\Customergroup',
+                Magento\CatalogInventory\Block\Adminhtml\Form\Field\Customergroup::class,
                 '',
                 ['data' => ['is_render_to_js_template' => true]]
             );
@@ -68,10 +80,10 @@ class Mintotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
     /**
      *  _prepareArrayRow
      *
-     * @param \Magento\Framework\DataObject $row
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @param DataObject $row
+     * @throws LocalizedException
      */
-    protected function _prepareArrayRow(\Magento\Framework\DataObject $row)
+    protected function _prepareArrayRow(DataObject $row)
     {
         $optionExtraAttr = [];
         $optionExtraAttr['option_' . $this->_getGroupRenderer()->calcOptionHash($row->getData('customer_group_id'))] =

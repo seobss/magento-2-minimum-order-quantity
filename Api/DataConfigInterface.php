@@ -29,8 +29,31 @@ namespace Bss\Limitcartqty\Api;
 
 interface DataConfigInterface
 {
+    /**
+     * MinValue
+     *
+     * @return mixed
+     */
     public function getMinValue();
+
+    /**
+     * MaxValue
+     *
+     * @return mixed
+     */
     public function getMaxValue();
+
+    /**
+     * CustomerId
+     *
+     * @return mixed
+     */
     public function getCustomerId();
+
+    /**
+     * Store Id
+     *
+     * @return mixed
+     */
     public function getStoreId();
 }

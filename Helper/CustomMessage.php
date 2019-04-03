@@ -27,14 +27,25 @@
  */
 namespace Bss\Limitcartqty\Helper;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Phrase;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
+
+/**
+ * Class CustomMessage
+ *
+ * @package Bss\Limitcartqty\Helper
+ */
 class CustomMessage
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
     /**
@@ -44,21 +55,23 @@ class CustomMessage
 
     /**
      * CustomMessage constructor.
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
     }
 
     /**
-     * @param $text
-     * @param $conf
-     * @param $cart
+     * Replace Data
+     *
+     * @param string $text
+     * @param string $conf
+     * @param string $cart
      * @return mixed
      */
     public function replaceData($text, $conf, $cart)
@@ -69,15 +82,18 @@ class CustomMessage
     }
 
     /**
-     * @param $conf
-     * @param $cart
-     * @return \Magento\Framework\Phrase|mixed
+     * Get Min Message
+     *
+     * @param string $conf
+     * @param string $cart
+     * @return Phrase|mixed
+     * @throws NoSuchEntityException
      */
     public function getMinMessage($conf, $cart)
     {
         $value = $this->scopeConfig->getValue(
             'Bss_Commerce/item_options/Bss_min_total_qty_message',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $this->getStoreId()
         );
         if ($value === null) {
@@ -88,15 +104,18 @@ class CustomMessage
     }
 
     /**
-     * @param $conf
-     * @param $cart
-     * @return \Magento\Framework\Phrase|mixed
+     * GetMaxMessage
+     *
+     * @param string $conf
+     * @param string $cart
+     * @return Phrase|mixed
+     * @throws NoSuchEntityException
      */
     public function getMaxMessage($conf, $cart)
     {
         $value = $this->scopeConfig->getValue(
             'Bss_Commerce/item_options/Bss_max_total_qty_message',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $this->getStoreId()
         );
         if ($value === null) {
@@ -107,8 +126,10 @@ class CustomMessage
     }
 
     /**
+     * GetStoreId
+     *
      * @return int
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getStoreId()
     {

@@ -28,16 +28,26 @@
 namespace Bss\Limitcartqty\Helper;
 
 use Magento\Customer\Api\GroupManagementInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Math\Random;
 use Magento\Store\Model\Store;
+use Magento\Store\Model\StoreManagerInterface;
 
+/**
+ * Class ConfigValue
+ *
+ * @package Bss\Limitcartqty\Helper
+ */
 class ConfigValue
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
     /**
-     * @var \Magento\Framework\Math\Random
+     * @var Random
      */
     protected $mathRandom;
     /**
@@ -45,22 +55,22 @@ class ConfigValue
      */
     protected $groupManagement;
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
     /**
      * ConfigValue constructor.
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Framework\Math\Random $mathRandom
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Random $mathRandom
      * @param GroupManagementInterface $groupManagement
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Framework\Math\Random $mathRandom,
+        ScopeConfigInterface $scopeConfig,
+        Random $mathRandom,
         GroupManagementInterface $groupManagement,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->mathRandom = $mathRandom;
@@ -69,8 +79,10 @@ class ConfigValue
     }
 
     /**
+     * Get Store Id
+     *
      * @return int
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getStoreId()
     {
@@ -78,7 +90,9 @@ class ConfigValue
     }
 
     /**
-     * @param $qty
+     * Fix Qty
+     *
+     * @param int $qty
      * @return float|null
      */
     protected function fixQty($qty)
@@ -87,8 +101,11 @@ class ConfigValue
     }
 
     /**
-     * @param $value
+     * SerializeValue
+     *
+     * @param float $value
      * @return string
+     * @throws LocalizedException
      */
     protected function serializeValue($value)
     {
@@ -112,8 +129,11 @@ class ConfigValue
     }
 
     /**
-     * @param $value
+     * Value
+     *
+     * @param number $value
      * @return array|mixed
+     * @throws LocalizedException
      */
     protected function unserializeValue($value)
     {
@@ -127,7 +147,9 @@ class ConfigValue
     }
 
     /**
-     * @param $value
+     * Value
+     *
+     * @param array $value
      * @return bool
      */
     protected function isEncodedArrayFieldValue($value)
@@ -148,9 +170,11 @@ class ConfigValue
     }
 
     /**
+     * Value
+     *
      * @param array $value
      * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function encodeArrayFieldValue(array $value)
     {
@@ -163,6 +187,8 @@ class ConfigValue
     }
 
     /**
+     * Value
+     *
      * @param array $value
      * @return array
      */
@@ -185,9 +211,11 @@ class ConfigValue
     }
 
     /**
-     * @param $_customerGroupId
+     * Get Min
+     *
+     * @param int $_customerGroupId
      * @return float|null
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
      */
     public function getMinConfigValue($_customerGroupId)
     {
@@ -213,9 +241,11 @@ class ConfigValue
     }
 
     /**
-     * @param $_customerGroupId
+     * Get Max
+     *
+     * @param int $_customerGroupId
      * @return float|null
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
      */
     public function getMaxConfigValue($_customerGroupId)
     {
@@ -241,8 +271,10 @@ class ConfigValue
     }
 
     /**
+     * Check Enable
+     *
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function isModuleEnable()
     {
@@ -254,9 +286,11 @@ class ConfigValue
     }
 
     /**
-     * @param $value
+     * Value
+     *
+     * @param string $value
      * @return array|mixed
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function makeArrayFieldValue($value)
     {
@@ -268,8 +302,11 @@ class ConfigValue
     }
 
     /**
-     * @param $value
+     * Value
+     *
+     * @param array $value
      * @return array|string
+     * @throws LocalizedException
      */
     public function makeStorableArrayFieldValue($value)
     {
@@ -281,8 +318,10 @@ class ConfigValue
     }
 
     /**
+     * Get Customer Id
+     *
      * @return int|null
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function getAllCustomersGroupId()
     {

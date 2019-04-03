@@ -27,22 +27,36 @@
  */
 namespace Bss\Limitcartqty\Block\Adminhtml\Form\Field;
 
-class Maxtotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
+use Magento\CatalogInventory\Block\Adminhtml\Form\Field\Customergroup;
+use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
+use Magento\Framework\DataObject;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\View\Element\BlockInterface;
+
+/**
+ * Class Maxtotalqty
+ *
+ * @package Bss\Limitcartqty\Block\Adminhtml\Form\Field
+ */
+class Maxtotalqty extends AbstractFieldArray
 {
     /**
      * @var
      */
     protected $groupRenderer;
 
+
     /**
-     * @return \Magento\Framework\View\Element\BlockInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * Get Group
+     *
+     * @return BlockInterface
+     * @throws LocalizedException
      */
     protected function _getGroupRenderer()
     {
         if (!$this->groupRenderer) {
             $this->groupRenderer = $this->getLayout()->createBlock(
-                'Magento\CatalogInventory\Block\Adminhtml\Form\Field\Customergroup',
+                Customergroup::class,
                 '',
                 ['data' => ['is_render_to_js_template' => true]]
             );
@@ -67,10 +81,8 @@ class Maxtotalqty extends \Magento\Config\Block\System\Config\Form\Field\FieldAr
 
     /**
      * _prepareArrayRow
-     *
-     * @param \Magento\Framework\DataObject $row
      */
-    protected function _prepareArrayRow(\Magento\Framework\DataObject $row)
+    protected function _prepareArrayRow(DataObject $row)
     {
         $optionExtraAttr = [];
         $optionExtraAttr['option_' . $this->_getGroupRenderer()->calcOptionHash($row->getData('customer_group_id'))] =

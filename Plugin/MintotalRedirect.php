@@ -27,41 +27,52 @@
  */
 namespace Bss\Limitcartqty\Plugin;
 
+use Bss\Limitcartqty\Helper\CheckoutFlag;
+use Magento\Checkout\Controller\Index\Index;
+use Magento\Framework\App\Response\Http;
+use Magento\Framework\App\Response\HttpInterface;
+use Magento\Multishipping\Helper\Data;
+
 /**
  * Class MintotalRedirect
+ *
  * @package Bss\Limitcartqty\Plugin
  */
 class MintotalRedirect
 {
     /**
-     * @var \Bss\Limitcartqty\Helper\CheckoutFlag
+     * @var CheckoutFlag
      */
     protected $checkoutFlag;
 
     /**
-     * @var \Magento\Framework\App\Response\Http
+     * @var Http
      */
     protected $response;
 
     /**
      * MintotalRedirect constructor.
-     * @param \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
-     * @param \Magento\Framework\App\Response\Http $response
+     *
+     * @param CheckoutFlag $checkoutFlag
+     * @param Http $response
      */
     public function __construct(
-        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag,
-        \Magento\Framework\App\Response\Http $response
+        CheckoutFlag $checkoutFlag,
+        Http $response
     ) {
         $this->checkoutFlag = $checkoutFlag;
         $this->response = $response;
     }
 
     /**
-     * @param \Magento\Checkout\Controller\Index\Index $subject
-     * @param $result
-     * @return \Magento\Framework\App\Response\Http|\Magento\Framework\App\Response\HttpInterface
+     * AfterExecute
+     *
+     * @param Index $subject
+     * @param array $result
+     * @return Http|HttpInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterExecute(\Magento\Checkout\Controller\Index\Index $subject, $result)
+    public function afterExecute(Index $subject, $result)
     {
         if ($this->checkoutFlag->isEnableToCheckout()) {
             return $result;
@@ -71,11 +82,15 @@ class MintotalRedirect
     }
 
     /**
-     * @param \Magento\Multishipping\Helper\Data $subject
-     * @param $result
+     * MultishippingCheckout
+     *
+     * @param Data $subject
+     * @param array $result
      * @return bool
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function afterIsMultishippingCheckoutAvailable(\Magento\Multishipping\Helper\Data $subject, $result)
+    public function afterIsMultishippingCheckoutAvailable(Data $subject, $result)
     {
         return $this->checkoutFlag->validateCheckout() && $result;
     }
