@@ -17,40 +17,38 @@
  */
 namespace Bss\Limitcartqty\Observer;
 
-use Bss\Limitcartqty\Helper\CheckoutFlag;
-use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Class UpdateCartObserver
+ * Class UpdateCustomerGroup
  *
  * @package Bss\Limitcartqty\Observer
  */
-class UpdateCartObserver implements ObserverInterface
+class UpdateCustomerGroup implements ObserverInterface
 {
     /**
-     * @var CheckoutFlag
+     * @var \Bss\Limitcartqty\Helper\CheckoutFlag
      */
     protected $checkoutFlag;
 
     /**
-     * UpdateCartObserver constructor.
+     * UpdateCustomerGroup constructor.
      *
-     * @param CheckoutFlag $checkoutFlag
+     * @param \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
      */
     public function __construct(
-        CheckoutFlag $checkoutFlag
+        \Bss\Limitcartqty\Helper\CheckoutFlag $checkoutFlag
     ) {
         $this->checkoutFlag = $checkoutFlag;
     }
 
     /**
-     * Execute
+     * Reset Cart
      *
+     * @param \Magento\Framework\Event\Observer $observer
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @param Observer $observer
      */
-    public function execute(Observer $observer)
+    public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $this->checkoutFlag->resetCart();
     }
