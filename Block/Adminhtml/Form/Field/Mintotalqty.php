@@ -54,7 +54,7 @@ class Mintotalqty extends AbstractFieldArray
     {
         if (!$this->groupRenderer) {
             $this->groupRenderer = $this->getLayout()->createBlock(
-                Magento\CatalogInventory\Block\Adminhtml\Form\Field\Customergroup::class,
+                \Magento\CatalogInventory\Block\Adminhtml\Form\Field\Customergroup::class,
                 '',
                 ['data' => ['is_render_to_js_template' => true]]
             );
