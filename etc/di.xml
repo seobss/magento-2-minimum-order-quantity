@@ -28,4 +28,7 @@
     <type name="Magento\Checkout\CustomerData\Cart">
         <plugin name="bss-section-cart-data" type="Bss\Limitcartqty\Plugin\CustomerData\Cart" sortOrder="1000"/>
     </type>
+    <type name="Magento\Paypal\Controller\Express\Start">
+        <plugin name="bss-validate-paypal" type="Bss\Limitcartqty\Plugin\ValidateCheckoutPaypal"/>
+    </type>
 </config>

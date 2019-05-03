@@ -95,6 +95,9 @@ class ConfigModel extends Value
     public function beforeSave()
     {
         $value = $this->getValue();
+        if (!$this->configValue->validateMinMaxQty($value)) {
+            throw new \Magento\Framework\Exception\ValidatorException(__('Qty must be integer and greater than zero.'));
+        }
         $value = $this->configValue->makeStorableArrayFieldValue($value);
         $this->setValue($value);
     }

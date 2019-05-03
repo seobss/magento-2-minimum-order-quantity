@@ -307,6 +307,25 @@ class ConfigValue
     }
 
     /**
+     * Validate Qty before save config
+     *
+     * @param array|string $value
+     * @return bool
+     */
+    public function validateMinMaxQty($value)
+    {
+        unset($value['__empty']);
+        if ($this->isEncodedArrayFieldValue($value)) {
+            foreach ($value as $row) {
+                if (!ctype_digit(strval($row['config_value'])) || $row['config_value'] <= 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Get Customer Id
      *
      * @return int|null
