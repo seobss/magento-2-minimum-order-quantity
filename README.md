@@ -84,6 +84,39 @@ Follow the same steps to configure the maximum order quantity.
 
 For detailed documentation, visit: **[User Guide](https://wiki.bsscommerce.com/docs/magento-2-check-out-extensions/magento-2-limit-cart-quantity/user-guide/)**
 
+## 5. Other helpful Magento 2 Extensions by BSSCommerce
+
+
+☞ [Shipping and Payment Method per Customer Group](https://bsscommerce.com/magento-2-shipping-and-payment-method-per-customer-group-extension.html): Assign specific shipping and payment methods for each customer group.
+
+☞ [Shopping Cart Price Rule per Store View](https://bsscommerce.com/magento-2-shopping-cart-price-rule-per-store-view-extension.html): Create flexible pricing and promotion rules tailored for each store view.
+
+☞ [Tax per Store View](https://bsscommerce.com/magento-2-tax-per-store-view-extension.html): Set up different tax configurations for products across various store views.
+
+☞ [Admin Product Preview Plus](https://bsscommerce.com/magento-2-admin-product-preview-plus-extension.html): Quickly preview frontend product pages from the admin panel.
+
+☞ [Admin Action Log](https://bsscommerce.com/magento-2-admin-action-log-extension.html): Track and log all administrative changes related to product rules and order management.
+
+☞ [Quick Order](https://bsscommerce.com/magento-2-wholesale-fast-order-extension.html): Allow customers to add multiple products to cart quickly using SKU or CSV upload.
+
+☞ [Request for Quote](https://bsscommerce.com/magento-2-request-for-quote-extension.html): Let B2B customers request quotes for custom orders directly from the store.
+
+☞ [Product Labels](https://bsscommerce.com/magento-2-product-label-extension.html): Highlight special offers, new products, or best sellers with customizable labels.
+
+☞ [Out of Stock Notification](https://bsscommerce.com/magento-2-out-of-stock-notification-extension.html): Notify customers automatically when out-of-stock products become available.
+
+☞ [Reward Points](https://bsscommerce.com/magento-2-reward-points-extension.html): Implement a loyalty system with points, rewards, and redemption options.
+
+☞ [Multiple Wishlists](https://bsscommerce.com/magento-2-multiple-wishlists-extension.html): Let customers create and manage multiple wishlists for different purposes.
+
+☞ [Ajax Add To Cart](https://bsscommerce.com/magento-2-ajax-add-to-cart-extension.html): Improve shopping experience with fast, AJAX-powered add-to-cart and cart updates.
+
+☞ [Magento 2 B2B Extension Package](https://bsscommerce.com/magento-2-b2b-extensions-package.html): Comprehensive and scalable B2B functionalities designed for both B2B-only and hybrid B2B & B2C stores, including corporate accounts, tiered pricing, quick order forms, custom approval workflows, personalized shipping and payment methods, quote management, and more.
+
+
+Explore more [Magento 2 extensions](https://bsscommerce.com/magento-2-extensions.html) to enhance product management, performance, and customer experience.
+
+
 ## FAQ
 **1. Can I set different minimum order quantities for different products?**
 Yes, the extension allows you to configure a specific minimum order quantity for each product in your store.
